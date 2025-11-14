@@ -6,12 +6,12 @@ import mongoose from 'mongoose';
 export const createExpense = async (req, res, next) => {
   try {
     const errors = validationResult(req);
-    if (!errors.length === 0) 
+    if (!errors.isEmpty())  // <-- FIXED
       return res.status(400).json({ errors: errors.array() });
 
-    const { category, amount, date } = req.body;
+    let { category, amount, date } = req.body;
+    amount = Number(amount); // <-- ensure it's a number
 
-    // make sure category ID is converted properly
     const categoryId = new mongoose.Types.ObjectId(category);
 
     const exp = new Expense({
@@ -27,26 +27,19 @@ export const createExpense = async (req, res, next) => {
     const monthStart = new Date(date);
     monthStart.setDate(1);
     monthStart.setHours(0, 0, 0, 0);
+    const monthEnd = new Date(monthStart);
+    monthEnd.setMonth(monthEnd.getMonth() + 1);
 
-    const monthStr = monthStart.toISOString().slice(0, 7);
-
-    // date range for aggregation
-    const monthStartDate = new Date(monthStart);
-    const monthEndDate = new Date(monthStart);
-    monthEndDate.setMonth(monthEndDate.getMonth() + 1);
-
-    // FIXED ObjectId constructors
+    // aggregate total including new expense
     const agg = await Expense.aggregate([
       {
         $match: {
           user: new mongoose.Types.ObjectId(req.user._id),
           category: categoryId,
-          date: { $gte: monthStartDate, $lt: monthEndDate }
+          date: { $gte: monthStart, $lt: monthEnd }
         }
       },
-      {
-        $group: { _id: null, total: { $sum: '$amount' } }
-      }
+      { $group: { _id: null, total: { $sum: '$amount' } } }
     ]);
 
     const spent = agg[0]?.total || 0;
@@ -54,7 +47,7 @@ export const createExpense = async (req, res, next) => {
     const budget = await Budget.findOne({
       user: req.user._id,
       category: categoryId,
-      month: monthStr
+      month: monthStart.toISOString().slice(0, 7)
     });
 
     const limit = budget ? budget.limit : null;
@@ -66,6 +59,7 @@ export const createExpense = async (req, res, next) => {
     next(err);
   }
 };
+
 
 export const listExpenses = async (req, res, next) => {
   try {
