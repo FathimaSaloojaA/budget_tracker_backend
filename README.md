@@ -64,7 +64,7 @@ npm install
 Create a .env file in the root of the backend project:
 
 PORT=5000
-MONGO_URI=mongodb://localhost:27017/budgetTracker
+
 
 
 Replace MONGO_URI with your MongoDB Atlas URI if using a cloud database.
