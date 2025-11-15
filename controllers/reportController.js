@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 
 export const monthlyReport = async (req, res, next) => {
   try {
-    const { month } = req.query; // YYYY-MM
+    const { month } = req.query; 
     if (!month) return res.status(400).json({ message: "month is required" });
 
     const [y, m] = month.split("-").map(Number);

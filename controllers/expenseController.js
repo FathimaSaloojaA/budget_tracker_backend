@@ -6,11 +6,11 @@ import mongoose from 'mongoose';
 export const createExpense = async (req, res, next) => {
   try {
     const errors = validationResult(req);
-    if (!errors.isEmpty())  // <-- FIXED
+    if (!errors.isEmpty()) 
       return res.status(400).json({ errors: errors.array() });
 
     let { category, amount, date } = req.body;
-    amount = Number(amount); // <-- ensure it's a number
+    amount = Number(amount); 
 
     const categoryId = new mongoose.Types.ObjectId(category);
 

@@ -3,7 +3,7 @@ import { validationResult } from 'express-validator';
 
 export const listBudgetsForMonth = async (req, res, next) => {
   try {
-    const { month } = req.query; // expect YYYY-MM
+    const { month } = req.query; 
     if (!month) return res.status(400).json({ message: 'month is required' });
     const budgets = await Budget.find({ user: req.user._id, month }).populate('category');
     res.json(budgets);
