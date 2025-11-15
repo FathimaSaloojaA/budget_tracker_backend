@@ -7,7 +7,7 @@ It provides REST APIs for managing expenses, budgets, categories, and generating
 
 ## 🌐 Live API
 
-- **Backend API (Live):** [https://your-backend-live-url.com/api](https://your-backend-live-url.com/api)
+- **Backend API (Live):** [https://budget-tracker-backend-rroy.onrender.com/api](https://your-backend-live-url.com/api)
 
 ---
 
@@ -35,7 +35,7 @@ It provides REST APIs for managing expenses, budgets, categories, and generating
 
 ## 🌐 Live API
 
-- **Backend API (Live):** [https://budget-tracker-backend-1-crqq.onrender.com/api](https://your-backend-live-url.com/api)
+- **Backend API (Live):** [https://budget-tracker-backend-rroy.onrender.com/api](https://your-backend-live-url.com/api)
 
 ---
 
