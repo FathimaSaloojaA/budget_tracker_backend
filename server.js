@@ -11,7 +11,7 @@ import errorHandler from './middlewares/errorHandler.js';
 
 dotenv.config();
 const app = express();
-const allowedOrigins = ['http://localhost:5173', 'https://budget-tracker-frontend-84lg.vercel.app'];
+const allowedOrigins = ['http://localhost:5173', 'https://budget-tracker-backend-rroy.onrender.com'];
 app.use(cors({
   origin: allowedOrigins,
   credentials: true, // if you need cookies or auth headers
